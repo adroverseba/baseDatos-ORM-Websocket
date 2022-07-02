@@ -3,13 +3,14 @@ const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const Container = require("./ddbb/clase-Container");
 const Mensajes = require("./ddbb/clase-Mensajes");
+const { knexProduct } = require("./config/mariaDB");
 
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
 // instancio objetos de las clases Container y Mensajes
-const productos = new Container({ fileName: "products" });
+const productos = new Container(knexProduct, "productos");
 const mensajes = new Mensajes({ fileName: "mensajes" });
 
 //codificacion

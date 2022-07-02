@@ -1,20 +1,20 @@
 const socket = io().connect();
 
 // configuro Handlebars y construyo una funcion con async await para traer con la funcion fetch la plantilla de hbs
-// const productTable = async (productos) => {
-//   const response = await fetch("./views/productos.hbs");
-//   const view = await response.text();
-//   const template = Handlebars.compile(view); //compila la plantilla
-//   const html = template({ product: productos }); //genera el html
-//   return html;
-// };
-
 const productTable = async (productos) => {
-  const response = await fetch("./views/productList.ejs");
+  const response = await fetch("./views/productos.hbs");
   const view = await response.text();
-  let html = ejs.render(view, { productos });
+  const template = Handlebars.compile(view); //compila la plantilla
+  const html = template({ product: productos }); //genera el html
   return html;
 };
+
+// const productTable = async (productos) => {
+//   const response = await fetch("./views/productList.ejs");
+//   const view = await response.text();
+//   let html = ejs.render(view, { productos });
+//   return html;
+// };
 
 socket.on("productos", (productos) => {
   productTable(productos).then((html) => {

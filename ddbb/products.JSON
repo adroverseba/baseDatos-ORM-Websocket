@@ -58,5 +58,11 @@
     "price": "111",
     "thumbnail": "https://www.casa.com",
     "id": 10
+  },
+  {
+    "title": "gato de la suerte",
+    "price": "100000",
+    "thumbnail": "https://t2.ea.ltmcdn.com/es/posts/7/2/3/historia_del_gato_chino_de_la_suerte_maneki_neko_20327_orig.jpg",
+    "id": 11
   }
 ]
