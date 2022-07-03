@@ -1,4 +1,4 @@
-//connection string
+//connection string + knex
 const knexProduct = require("knex")({
   client: "mysql",
   connection: {
@@ -11,4 +11,12 @@ const knexProduct = require("knex")({
   pool: { min: 0, max: 7 },
 });
 
-module.exports = { knexProduct };
+const knexMessage = require("knex")({
+  client: "sqlite3",
+  connection: {
+    filename: "./ddbb/messages.sqlite",
+  },
+  useNullAsDefault: true,
+});
+
+module.exports = { knexProduct, knexMessage };
