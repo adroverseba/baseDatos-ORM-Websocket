@@ -16,10 +16,22 @@ const productTable = async (productos) => {
   return html;
 };
 
-socket.on("productos", (productos) => {
-  productTable(productos).then((html) => {
-    document.getElementById("productos").innerHTML = html;
-  });
+// socket.on("productos", (productos) => {
+//   productTable(productos).then((html) => {
+//     document.getElementById("productos").innerHTML = html;
+//   });
+// });
+const getProductBtn = document.getElementById("getProducts");
+getProductBtn.addEventListener("click", () => {
+  // console.log("click");
+  fetch("/api/productos-test")
+    .then((res) => res.json())
+    .then((data) => {
+      return productTable(data);
+    })
+    .then((html) => {
+      document.getElementById("productos").innerHTML = html;
+    });
 });
 
 const ingresoProducto = document.querySelector("#ingresarProducto");

@@ -1,16 +1,17 @@
 const express = require("express");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
-const Container = require("./ddbb/clase-Container");
+// const Container = require("./ddbb/clase-Container");
 const Mensajes = require("./ddbb/clase-Mensajes");
 const { knexProduct, knexMessage } = require("./config/mariaDB");
+const routerApi = require("./routes");
 
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
 // instancio objetos de las clases Container y Mensajes
-const productos = new Container(knexProduct, "productos");
+// const productos = new Container(knexProduct, "productos");
 const mensajes = new Mensajes(knexMessage, "mensajes");
 
 //codificacion
@@ -19,23 +20,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //configuracion de Router
-// const routerProductos = require("./routes/api");
-// app.use(routerProductos);
+routerApi(app);
+
+//? PRODUCTOS
+//  // PRODUCTOS
+//   console.log(`Nuevo cliente ${socket.id} conectado`);
+//   socket.emit("productos", await productos.getAll()); // envio a los clientes nuevos conectado los productos
+// // recibo el producto  nuevo,  lo guardo y envio la lista
+//   socket.on("agregarProducto", async (producto) => {
+// // console.log(producto);
+//     await productos.save(producto);
+//     io.sockets.emit("productos", await productos.getAll());
+//   });
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++
 // Socket.io
-//? PRODUCTOS
 io.on("connection", async (socket) => {
-  // PRODUCTOS
-  console.log(`Nuevo cliente ${socket.id} conectado`);
-  socket.emit("productos", await productos.getAll()); // envio a los clientes nuevos conectado los productos
-  // recibo el producto  nuevo,  lo guardo y envio la lista
-  socket.on("agregarProducto", async (producto) => {
-    // console.log(producto);
-    await productos.save(producto);
-    io.sockets.emit("productos", await productos.getAll());
-  });
-
   //? MENSAJES
   // envio todos los mensajes a los conectados
   socket.emit("mensajes", await mensajes.getAll());
