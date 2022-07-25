@@ -3,9 +3,9 @@ const knexProduct = require("knex")({
   client: "mysql",
   connection: {
     host: "localhost",
-    port: 4306,
+    port: 3306,
     user: "root",
-    password: "",
+    password: "root",
     database: "ecommerce",
   },
   pool: { min: 0, max: 7 },
